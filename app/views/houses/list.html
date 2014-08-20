@@ -1,0 +1,25 @@
+<div data-ng-controller="HousesController" data-ng-init='getHouse()'>
+  <h2>House List</h2>
+	<div class="form-group">
+		<select 
+			data-ng-model="cityId" 
+			name="cityInfo" 
+			required="required"
+			data-ng-options="c.Id as c.name for c in infos.cities"
+			class="form-control">
+		</select>
+	</div>	
+	<div class="form-group">	
+		<select 
+			data-ng-model="typeId" 
+			name="typeInfo" 
+			required="required"
+			data-ng-options="c.Id as c.name for c in infos.types"
+			class="form-control">
+		</select>
+	</div>
+	<button type="button" class="btn btn-primary" data-ng-click="getHouse()">Search</button>
+	<br><br>
+	<div class="alert alert-info" data-ng-show="loading">LOADING</div>
+  	<div data-ng-show="!loading">{{ houses }}</div>
+</div>
