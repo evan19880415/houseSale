@@ -1,29 +1,35 @@
-<div data-ng-controller="HousesController" data-ng-init='getHouse()'>
+<div data-ng-controller="HousesController" data-ng-init='getHouse();getArea()'>
   <h2>House List</h2>
 	<div class="row">
 		<div class="col-xs-6">
-			<input type="text" data-ng-model="searchLocation" placeholder="Location" class="form-control">
-		</div>
-		<div class="col-xs-3">
-			<select 
+			<select
+				ng-disabled="loading" 
 				data-ng-model="cityId" 
 				name="cityInfo" 
 				required="required"
 				data-ng-options="c.Id as c.name for c in infos.cities"
 				class="form-control"
-				ng-change="getHouse()">
+				ng-change="getHouse();getArea(cityId);flag[flagIndex] = false">
 			</select>
 		</div>	
-		<div class="col-xs-3">	
-			<select 
+		<div class="col-xs-6">	
+			<select
+				ng-disabled="loading" 
 				data-ng-model="typeId" 
 				name="typeInfo" 
 				required="required"
 				data-ng-options="c.Id as c.name for c in infos.types"
 				class="form-control"
-				ng-change="getHouse()">
+				ng-change="getHouse();flag[flagIndex] = false">
 			</select>
 		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-xs-3 col-md-1" style="margin-top:2px;" ng-repeat="area in locations">
+			<button ng-disabled="loading" 
+			        ng-click="changeArea(area)" class="btn btn-warning btn-sm">{{ area }}</button>
+		</div>		
 	</div>
 	<br><br>
 	<div class="alert alert-info" data-ng-show="loading">LOADING</div>
@@ -39,12 +45,12 @@
 		  				<th></th>
 		  			</tr>	
 	  			</thead>
-	  			<tbody ng-repeat="house in filterArea(houses, searchLocation) | limitTo:searchsize.limit"
+	  			<tbody ng-repeat="house in filterArea(houses, searchArea) | limitTo:searchsize.limit"
 	  				   data-hg-init="flag[$index] = false">
 			  		<tr>
 						<td ng-repeat="(key, value) in filterList(house)">{{ value }}</td>
 						<td>
-							<button ng-click="flag[$index]=!flag[$index]" 
+							<button ng-click="flag[$index]=!flag[$index];checkFlagIndex($index)" 
 									class="btn btn-primary btn-sm">
 									詳細
 							</button>

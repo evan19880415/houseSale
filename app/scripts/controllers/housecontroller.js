@@ -8,7 +8,10 @@ angular.module('houseSaleApp.controllers.house',['houseSaleApp.services.houses',
         "limit": 10
       }
 
+      $scope.searchArea = '';
+      $scope.locations = '';
       $scope.flag = [];
+      $scope.flagIndex = 0;
       $scope.cityId = 'A'; //台北市
       $scope.typeId = 'A'; //不動產買賣
       $scope.$on('LOAD', function(){$scope.loading = true});
@@ -29,17 +32,34 @@ angular.module('houseSaleApp.controllers.house',['houseSaleApp.services.houses',
         });
       }
 
+      $scope.getArea = function(cityId){
+        cityId = cityId=== undefined?"A":cityId;
+        for(var key in $scope.infos.cities){ 
+          if($scope.infos.cities[key].Id == cityId){
+            $scope.locations = $scope.infos.cities[key].locations;
+          } 
+        }
+      }  
+
+      $scope.checkFlagIndex = function(index){
+        $scope.flagIndex = index;
+      }
+
+      $scope.changeArea = function(area){
+        $scope.searchArea= area;
+      }
+
       $scope.numberOfPages=function(){
         return Math.ceil($scope.houses.length/$scope.searchsize.limit);                
       }
 
-      $scope.filterArea = function(houses,searchLocation) {
+      $scope.filterArea = function(houses,searchArea) {
         var result = [];
-        if(searchLocation === undefined || searchLocation == ''){
+        if(searchArea === undefined || searchArea == ''){
           result = houses;
         }else{
           angular.forEach(houses, function(value, key) {
-            if(value.鄉鎮市區 == searchLocation){
+            if(value.鄉鎮市區 == searchArea){
               result.push(value);
               //console.log(value);
             }
