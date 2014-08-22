@@ -55,7 +55,7 @@ angular.module('houseSaleApp.controllers.house',['houseSaleApp.services.houses',
 
       $scope.filterArea = function(houses,searchArea) {
         var result = [];
-        if(searchArea === undefined || searchArea == ''){
+        if(searchArea === undefined || searchArea == '' || searchArea == null){
           result = houses;
         }else{
           angular.forEach(houses, function(value, key) {
@@ -64,7 +64,7 @@ angular.module('houseSaleApp.controllers.house',['houseSaleApp.services.houses',
               //console.log(value);
             }
           });
-        }                 
+        }                
         return result;
       }
 

@@ -9,7 +9,7 @@
 				required="required"
 				data-ng-options="c.Id as c.name for c in infos.cities"
 				class="form-control"
-				ng-change="getHouse();getArea(cityId);flag[flagIndex] = false">
+				ng-change="getHouse();getArea(cityId);flag[flagIndex] = false;searchArea='';">
 			</select>
 		</div>	
 		<div class="col-xs-6">	
