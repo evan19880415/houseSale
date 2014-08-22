@@ -1,25 +1,66 @@
 <div data-ng-controller="HousesController" data-ng-init='getHouse()'>
   <h2>House List</h2>
-	<div class="form-group">
-		<select 
-			data-ng-model="cityId" 
-			name="cityInfo" 
-			required="required"
-			data-ng-options="c.Id as c.name for c in infos.cities"
-			class="form-control">
-		</select>
-	</div>	
-	<div class="form-group">	
-		<select 
-			data-ng-model="typeId" 
-			name="typeInfo" 
-			required="required"
-			data-ng-options="c.Id as c.name for c in infos.types"
-			class="form-control">
-		</select>
+	<div class="row">
+		<div class="col-xs-6">
+			<input type="text" data-ng-model="searchLocation" placeholder="Location" class="form-control">
+		</div>
+		<div class="col-xs-3">
+			<select 
+				data-ng-model="cityId" 
+				name="cityInfo" 
+				required="required"
+				data-ng-options="c.Id as c.name for c in infos.cities"
+				class="form-control"
+				ng-change="getHouse()">
+			</select>
+		</div>	
+		<div class="col-xs-3">	
+			<select 
+				data-ng-model="typeId" 
+				name="typeInfo" 
+				required="required"
+				data-ng-options="c.Id as c.name for c in infos.types"
+				class="form-control"
+				ng-change="getHouse()">
+			</select>
+		</div>
 	</div>
-	<button type="button" class="btn btn-primary" data-ng-click="getHouse()">Search</button>
 	<br><br>
 	<div class="alert alert-info" data-ng-show="loading">LOADING</div>
-  	<div data-ng-show="!loading">{{ houses }}</div>
+
+  	<div data-ng-show="!loading">
+  		<div>
+	  		<table class="table table-bordered">
+	  			<thead>
+	  				<tr>
+		  				<th>地址</th>
+		  				<th>單價</th>
+		  				<th>總價</th>
+		  				<th></th>
+		  			</tr>	
+	  			</thead>
+	  			<tbody ng-repeat="house in filterArea(houses, searchLocation) | limitTo:searchsize.limit"
+	  				   data-hg-init="flag[$index] = false">
+			  		<tr>
+						<td ng-repeat="(key, value) in filterList(house)">{{ value }}</td>
+						<td>
+							<button ng-click="flag[$index]=!flag[$index]" 
+									class="btn btn-primary btn-sm">
+									詳細
+							</button>
+						</td>
+					</tr>
+					<tr ng-show="flag[$index]">
+						<td colspan="4">
+							<table class="table table-striped">
+								<tr ng-repeat="(key, value) in house">
+									<td>{{ key }}</td><td>{{ value }}</td>
+								</tr>	
+							</table>
+						</td>	
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>

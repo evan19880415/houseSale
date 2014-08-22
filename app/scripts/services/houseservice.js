@@ -8,8 +8,10 @@ angular.module('houseSaleApp.services.houses', [])
             var deferred = $q.defer();
 
             $timeout(function() {
-                $http.get('../../assets/'+city+'_lvr_land_'+type+'.xml').success(function(data) {
-                    deferred.resolve($.xml2json(data));
+                $http.get(LocalPath+city+'_lvr_land_'+type+'.xml').success(function(data) {
+                  deferred.resolve($.xml2json(data));
+                }).error(function(){
+                  deferred.resolve("The file does not exist");
                 });
             }, 30);
 
