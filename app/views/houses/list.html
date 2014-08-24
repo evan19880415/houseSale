@@ -1,5 +1,6 @@
 <div data-ng-controller="HousesController" data-ng-init='getHouse();getArea()'>
-  <h2>House List</h2>
+  <h2>House List {{currentPage}}/{{ numberOfPages(areaHouse) }}</h2>
+  	<input type="text" class="form-control" ng-model="currentPage">
 	<div class="row">
 		<div class="col-xs-6">
 			<select
@@ -9,7 +10,7 @@
 				required="required"
 				data-ng-options="c.Id as c.name for c in infos.cities"
 				class="form-control"
-				ng-change="getHouse();getArea(cityId);flag[flagIndex] = false;searchArea='';">
+				ng-change="getHouse();getArea(cityId);flag[flagIndex] = false;searchArea='';areaHouse.length=0;">
 			</select>
 		</div>	
 		<div class="col-xs-6">	
@@ -28,7 +29,7 @@
 	<div class="row">
 		<div class="col-xs-3 col-md-1" style="margin-top:2px;" ng-repeat="area in locations">
 			<button ng-disabled="loading" 
-			        ng-click="changeArea(area)" class="btn btn-warning btn-sm">{{ area }}</button>
+			        ng-click="changeArea(area);" class="btn btn-warning btn-sm">{{ area }}</button>
 		</div>		
 	</div>
 	<br><br>
@@ -68,5 +69,32 @@
 				</tbody>
 			</table>
 		</div>
+		<!--<div class="pagination text-center" ng-show="numberOfPages() > 1">
+		    <ul>
+		        <li ng-click="paginator.firstPage()" ng-class="paginator.isFirstPage() && 'disabled'">
+		            <a>
+		                <i class="icon-fast-backward" ng-class="paginator.isFirstPage() && 'icon-white'"></i>
+		            </a>
+		        </li>
+		        <li ng-click="paginator.perviousPage()" ng-class="paginator.isFirstPage() && 'disabled'">
+		            <a>
+		                <i class="icon-step-backward" ng-class="paginator.isFirstPage() && 'icon-white'"></i>
+		            </a>
+		        </li>
+		        <li ng-click="paginator.setPage(i)" ng-repeat="i in [] | forLoop:0:numberOfPages()" ng-class="paginator.page==i && 'active'">
+		            <a>{{i+1}}</a>
+		        </li>
+		        <li ng-click="paginator.nextPage()" ng-class="paginator.isLastPage() && 'disabled'">
+		            <a>
+		                <i class="icon-step-forward" ng-class="paginator.isLastPage() && 'icon-white'"></i>
+		            </a>
+		        </li>
+		        <li ng-click="paginator.lastPage()" ng-class="paginator.isLastPage() && 'disabled'">
+		            <a>
+		                <i class="icon-fast-forward" ng-class="paginator.isLastPage() && 'icon-white'"></i>
+		            </a>
+		        </li>
+		    </ul>
+		</div>-->
 	</div>
 </div>

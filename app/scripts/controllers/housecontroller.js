@@ -8,6 +8,8 @@ angular.module('houseSaleApp.controllers.house',['houseSaleApp.services.houses',
         "limit": 10
       }
 
+      $scope.currentPage = 0;
+      $scope.areaHouse = [];
       $scope.searchArea = '';
       $scope.locations = '';
       $scope.flag = [];
@@ -47,23 +49,36 @@ angular.module('houseSaleApp.controllers.house',['houseSaleApp.services.houses',
 
       $scope.changeArea = function(area){
         $scope.searchArea= area;
+        $scope.areaHouse.length = 0;
       }
 
-      $scope.numberOfPages=function(){
-        return Math.ceil($scope.houses.length/$scope.searchsize.limit);                
+      $scope.numberOfPages=function(house){
+        return Math.ceil(house.length/$scope.searchsize.limit);                
       }
 
       $scope.filterArea = function(houses,searchArea) {
         var result = [];
+        var current = $scope.currentPage == 0?0:$scope.currentPage*10;
         if(searchArea === undefined || searchArea == '' || searchArea == null){
-          result = houses;
+          for(var i=current;i<current+10;i++){
+            if(houses[i]!= null){
+              result.push(houses[i]);
+            }        
+          }
         }else{
-          angular.forEach(houses, function(value, key) {
-            if(value.鄉鎮市區 == searchArea){
-              result.push(value);
-              //console.log(value);
+          if($scope.areaHouse.length == 0){
+            angular.forEach(houses, function(value, key) {
+              if(value.鄉鎮市區 == searchArea){
+                $scope.areaHouse.push(value);
+              }
+            });
+          }else{
+            for(var i=current;i<current+10;i++){
+              if($scope.areaHouse[i]!= null){
+                result.push($scope.areaHouse[i]);
+              }        
             }
-          });
+          }          
         }                
         return result;
       }
