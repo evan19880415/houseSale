@@ -1,6 +1,5 @@
 <div data-ng-controller="HousesController" data-ng-init='getHouse();getArea()'>
-  <h2>House List {{currentPage}}/{{ numberOfPages(areaHouse) }}</h2>
-  	<input type="text" class="form-control" ng-model="currentPage">
+  <h2>House List</h2>
 	<div class="row">
 		<div class="col-xs-6">
 			<select
@@ -67,34 +66,15 @@
 						</td>	
 					</tr>
 				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="4" align="center">
+							<pagination total-items="currentHouses()" ng-model="currentPage" max-size="10" class="pagination-sm" boundary-links="true" rotate="false" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" align="center"></pagination>
+						</td>
+					</tr>	
+				</tfoot>
 			</table>
+			
 		</div>
-		<!--<div class="pagination text-center" ng-show="numberOfPages() > 1">
-		    <ul>
-		        <li ng-click="paginator.firstPage()" ng-class="paginator.isFirstPage() && 'disabled'">
-		            <a>
-		                <i class="icon-fast-backward" ng-class="paginator.isFirstPage() && 'icon-white'"></i>
-		            </a>
-		        </li>
-		        <li ng-click="paginator.perviousPage()" ng-class="paginator.isFirstPage() && 'disabled'">
-		            <a>
-		                <i class="icon-step-backward" ng-class="paginator.isFirstPage() && 'icon-white'"></i>
-		            </a>
-		        </li>
-		        <li ng-click="paginator.setPage(i)" ng-repeat="i in [] | forLoop:0:numberOfPages()" ng-class="paginator.page==i && 'active'">
-		            <a>{{i+1}}</a>
-		        </li>
-		        <li ng-click="paginator.nextPage()" ng-class="paginator.isLastPage() && 'disabled'">
-		            <a>
-		                <i class="icon-step-forward" ng-class="paginator.isLastPage() && 'icon-white'"></i>
-		            </a>
-		        </li>
-		        <li ng-click="paginator.lastPage()" ng-class="paginator.isLastPage() && 'disabled'">
-		            <a>
-		                <i class="icon-fast-forward" ng-class="paginator.isLastPage() && 'icon-white'"></i>
-		            </a>
-		        </li>
-		    </ul>
-		</div>-->
 	</div>
 </div>
