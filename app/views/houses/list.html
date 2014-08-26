@@ -26,6 +26,16 @@
 	</div>
 	<br>
 	<div class="row">
+		<div class="col-xs-11">
+			<input type="text" class="form-control" ng-model='searchLocation' placeholder="請輸入地址">
+		</div>
+		<div class="col-xs-1">
+			<button ng-disabled="loading" 
+			        ng-click="changeArea(searchLocation);" class="btn btn-primary btn-sm">搜尋</button>
+		</div>
+	</div>	
+	<br>
+	<div class="row">
 		<div class="col-xs-3 col-md-1" style="margin-top:2px;" ng-repeat="area in locations">
 			<button ng-disabled="loading" 
 			        ng-click="changeArea(area);" class="btn btn-warning btn-sm">{{ area }}</button>
@@ -40,8 +50,10 @@
 	  			<thead>
 	  				<tr>
 		  				<th>地址</th>
-		  				<th>單價</th>
-		  				<th>總價</th>
+		  				<th>交易日期</th>
+		  				<th>單價(萬/坪)</th>
+		  				<th>總價(萬)</th>
+		  				<th>總面積(坪)</th>
 		  				<th></th>
 		  			</tr>	
 	  			</thead>
@@ -57,10 +69,11 @@
 						</td>
 					</tr>
 					<tr ng-show="flag[$index]">
-						<td colspan="4">
+						<td colspan="6">
 							<table class="table table-striped">
 								<tr ng-repeat="(key, value) in house">
-									<td>{{ key }}</td><td>{{ value }}</td>
+									<td>{{ key }}</td>
+									<td style="border-left:1px solid #dddddd" >{{ value }}</td>
 								</tr>	
 							</table>
 						</td>	
@@ -68,7 +81,7 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="4" align="center">
+						<td colspan="6" align="center">
 							<pagination total-items="currentHouses()" ng-model="currentPage" max-size="10" class="pagination-sm" boundary-links="true" rotate="false" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" align="center"></pagination>
 						</td>
 					</tr>	

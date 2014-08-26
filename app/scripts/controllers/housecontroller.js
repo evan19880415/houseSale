@@ -13,9 +13,11 @@ angular.module('houseSaleApp.controllers.house',['houseSaleApp.services.houses',
       $scope.houses = [];
       $scope.areaHouse = [];
       $scope.searchArea = '';
+      $scope.searchLocation = '';
       $scope.locations = '';
       $scope.flag = [];
       $scope.flagIndex = 0;
+      $scope.flagLastIndex = 0;
       $scope.cityId = 'A'; //台北市
       $scope.typeId = 'A'; //不動產買賣
       $scope.$on('LOAD', function(){$scope.loading = true});
@@ -51,6 +53,7 @@ angular.module('houseSaleApp.controllers.house',['houseSaleApp.services.houses',
 
       $scope.changeArea = function(area){
         $scope.searchArea= area;
+        $scope.currentPage = 1;
         $scope.areaHouse.length = 0;
       }
 
@@ -75,7 +78,7 @@ angular.module('houseSaleApp.controllers.house',['houseSaleApp.services.houses',
           }else{
             if($scope.areaHouse.length == 0){
               angular.forEach(houses, function(value, key) {
-                if(value.鄉鎮市區 == searchArea){
+                if(value.土地區段位置或建物區門牌.match(searchArea)!=null){
                   $scope.areaHouse.push(value);
                 }
               });
@@ -93,7 +96,17 @@ angular.module('houseSaleApp.controllers.house',['houseSaleApp.services.houses',
       }
 
       $scope.filterList = function(house) {
-        var result = [house.土地區段位置或建物區門牌,house.單價每平方公尺,house.總價元];
+        var unitPrice = 0;
+        var totalPrice = house.總價元;
+        var unitArea = house.建物移轉總面積平方公尺;
+
+        totalPrice = totalPrice.substring(0, totalPrice.length - 4);
+        unitArea = (unitArea/3.3058).toString();
+        unitPrice = (totalPrice/unitArea).toString();
+        unitPrice = unitPrice.substring(0, unitPrice.indexOf('.')+2);
+        unitArea = unitArea.substring(0, unitArea.indexOf('.')+3);
+
+        var result = [house.土地區段位置或建物區門牌,house.交易年月,unitPrice,totalPrice,unitArea];
                        
         return result;
       }
@@ -101,6 +114,6 @@ angular.module('houseSaleApp.controllers.house',['houseSaleApp.services.houses',
 
       $scope.setPage = function (pageNo) {
         $scope.currentPage = pageNo;
-      };
+      };  
       
   }]);
