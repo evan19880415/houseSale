@@ -31,10 +31,13 @@ body {
   border-top: 1px solid #e5e5e5;
 }
 
+/* google map*/
+.angular-google-map-container { height: 400px; }
+
 /* Customize container */
-@media (min-width: 768px) {
+@media (min-width: 968px) {
   .container {
-    max-width: 730px;
+    max-width: 930px;
   }
 }
 .container-narrow > hr {

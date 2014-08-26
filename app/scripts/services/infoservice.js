@@ -31,7 +31,7 @@ angular.module('houseSaleApp.services.info', [])
       info.types = [
         {"Id": "A", "name":"不動產買賣"},
         {"Id": "B", "name":"預售屋買賣"},
-        {"Id": "C", "name":"不動產租賃"}
+        //{"Id": "C", "name":"不動產租賃"}
       ];
       // Public API here
       return info;

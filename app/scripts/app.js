@@ -3,5 +3,5 @@
 var app = angular.module('houseSaleApp',
 	[ 'houseSaleApp.config'
 	, 'houseSaleApp.controllers.house'
-	, 'ngRoute','ui.bootstrap']
+	, 'ngRoute','ui.bootstrap','google-maps']
 	);

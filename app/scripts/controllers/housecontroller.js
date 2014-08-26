@@ -8,6 +8,23 @@ angular.module('houseSaleApp.controllers.house',['houseSaleApp.services.houses',
         "limit": 10
       }
 
+      //$scope.loc = { latitude: 40, longitude: -73 };
+      $scope.map = {
+          center:{
+            latitude: 40, 
+            longitude: -73
+          },
+          zoom: 12
+      }
+
+      $scope.marker = {
+            id:0,
+            coords: {   
+              latitude: 40, 
+              longitude: -73
+            }
+      }
+
       $scope.currentPage = 1;
       $scope.currentHouses = [];
       $scope.houses = [];
@@ -115,5 +132,30 @@ angular.module('houseSaleApp.controllers.house',['houseSaleApp.services.houses',
       $scope.setPage = function (pageNo) {
         $scope.currentPage = pageNo;
       };  
+
+      $scope.gotoLocation = function (lat, lon) {    
+          //$scope.loc = { latitude: lat, longitude: lon };
+          $scope.map.center = { latitude: lat, longitude: lon };
+          $scope.marker.coords = { latitude: lat, longitude: lon };
+          $scope.$apply("marker");
+          $scope.$apply("map");
+      };
+
+      $scope.geoCode = function (geoSearch) {
+        var search = geoSearch;
+            if (!this.geocoder) this.geocoder = new google.maps.Geocoder();
+            this.geocoder.geocode({ 'address': search }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    var loc = results[0].geometry.location;
+                    search = results[0].formatted_address;
+                    //$scope.loc.latitude = loc.lat();
+                    //$scope.loc.longitude = loc.lng();
+                    $scope.gotoLocation(loc.lat(), loc.lng());
+
+                } else {
+                    alert("Sorry, this search produced no results.");
+                }
+            });
+      };
       
   }]);
